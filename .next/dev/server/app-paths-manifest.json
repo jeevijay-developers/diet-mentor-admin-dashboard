@@ -2,8 +2,6 @@
   "/dashboard/blogs/page": "app/dashboard/blogs/page.js",
   "/dashboard/category/page": "app/dashboard/category/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/dashboard/patients/page": "app/dashboard/patients/page.js",
   "/dashboard/plans/page": "app/dashboard/plans/page.js",
-  "/dashboard/settings/page": "app/dashboard/settings/page.js",
   "/page": "app/page.js"
 }

@@ -269,9 +269,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-right.js [app-client] (ecmascript) <export default as ChevronRight>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/hooks/use-toast.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/image.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
+;
 ;
 ;
 ;
@@ -334,23 +336,23 @@ function Sidebar() {
                         className: "h-5 w-5"
                     }, void 0, false, {
                         fileName: "[project]/components/dashboard/sidebar.tsx",
-                        lineNumber: 77,
+                        lineNumber: 78,
                         columnNumber: 21
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$menu$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {
                         className: "h-5 w-5"
                     }, void 0, false, {
                         fileName: "[project]/components/dashboard/sidebar.tsx",
-                        lineNumber: 77,
+                        lineNumber: 78,
                         columnNumber: 49
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/dashboard/sidebar.tsx",
-                    lineNumber: 71,
+                    lineNumber: 72,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/dashboard/sidebar.tsx",
-                lineNumber: 70,
+                lineNumber: 71,
                 columnNumber: 7
             }, this),
             isOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -358,7 +360,7 @@ function Sidebar() {
                 onClick: ()=>setIsOpen(false)
             }, void 0, false, {
                 fileName: "[project]/components/dashboard/sidebar.tsx",
-                lineNumber: 83,
+                lineNumber: 84,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
@@ -367,52 +369,35 @@ function Sidebar() {
                     className: "flex flex-col h-full",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "p-6 border-b border-sidebar-border",
+                            className: "p-6 border-b-2 rounded-md border-gray-200",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/dashboard",
                                 className: "flex items-center gap-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "w-8 h-8 bg-sidebar-primary-foreground rounded-md flex items-center justify-center font-bold text-primary",
-                                        children: "DM"
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                        src: "/dietmentor-logo.png",
+                                        alt: "DietMentor Logo",
+                                        width: 100,
+                                        height: 80,
+                                        className: "object-contain w-56"
                                     }, void 0, false, {
                                         fileName: "[project]/components/dashboard/sidebar.tsx",
-                                        lineNumber: 99,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "font-bold text-sm",
-                                                children: "DietMentor"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/dashboard/sidebar.tsx",
-                                                lineNumber: 103,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "text-xs opacity-80",
-                                                children: "Admin Panel"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/dashboard/sidebar.tsx",
-                                                lineNumber: 104,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/dashboard/sidebar.tsx",
-                                        lineNumber: 102,
-                                        columnNumber: 15
+                                        lineNumber: 101,
+                                        columnNumber: 17
                                     }, this)
-                                ]
-                            }, void 0, true, {
+                                }, void 0, false, {
+                                    fileName: "[project]/components/dashboard/sidebar.tsx",
+                                    lineNumber: 100,
+                                    columnNumber: 15
+                                }, this)
+                            }, void 0, false, {
                                 fileName: "[project]/components/dashboard/sidebar.tsx",
-                                lineNumber: 98,
+                                lineNumber: 99,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/dashboard/sidebar.tsx",
-                            lineNumber: 97,
+                            lineNumber: 98,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -430,7 +415,7 @@ function Sidebar() {
                                                 className: "h-5 w-5 shrink-0"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/dashboard/sidebar.tsx",
-                                                lineNumber: 124,
+                                                lineNumber: 127,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -438,31 +423,31 @@ function Sidebar() {
                                                 children: item.label
                                             }, void 0, false, {
                                                 fileName: "[project]/components/dashboard/sidebar.tsx",
-                                                lineNumber: 125,
+                                                lineNumber: 128,
                                                 columnNumber: 21
                                             }, this),
                                             active && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
                                                 className: "h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/dashboard/sidebar.tsx",
-                                                lineNumber: 126,
+                                                lineNumber: 129,
                                                 columnNumber: 32
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/dashboard/sidebar.tsx",
-                                        lineNumber: 116,
+                                        lineNumber: 119,
                                         columnNumber: 19
                                     }, this)
                                 }, item.href, false, {
                                     fileName: "[project]/components/dashboard/sidebar.tsx",
-                                    lineNumber: 115,
+                                    lineNumber: 118,
                                     columnNumber: 17
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/components/dashboard/sidebar.tsx",
-                            lineNumber: 110,
+                            lineNumber: 113,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -475,30 +460,30 @@ function Sidebar() {
                                         className: "h-4 w-4"
                                     }, void 0, false, {
                                         fileName: "[project]/components/dashboard/sidebar.tsx",
-                                        lineNumber: 139,
+                                        lineNumber: 142,
                                         columnNumber: 15
                                     }, this),
                                     "Logout"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/dashboard/sidebar.tsx",
-                                lineNumber: 135,
+                                lineNumber: 138,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/dashboard/sidebar.tsx",
-                            lineNumber: 134,
+                            lineNumber: 137,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/dashboard/sidebar.tsx",
-                    lineNumber: 95,
+                    lineNumber: 96,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/dashboard/sidebar.tsx",
-                lineNumber: 90,
+                lineNumber: 91,
                 columnNumber: 7
             }, this)
         ]

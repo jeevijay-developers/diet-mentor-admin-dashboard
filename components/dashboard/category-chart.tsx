@@ -1,17 +1,20 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
-const data = [
-  { name: "Kids", value: 28 },
-  { name: "Cancer", value: 15 },
-  { name: "Weight Loss", value: 32 },
-  { name: "Muscle Gain", value: 18 },
-  { name: "Diabetes", value: 22 },
-  { name: "Heart Health", value: 12 },
-  { name: "Custom", value: 8 },
-]
+type CategorySlice = {
+  name: string;
+  value: number;
+};
+
+const FALLBACK_DATA: CategorySlice[] = [{ name: "General", value: 1 }];
 
 const COLORS = [
   "hsl(var(--color-chart-1))",
@@ -21,9 +24,17 @@ const COLORS = [
   "hsl(var(--color-chart-5))",
   "hsl(var(--color-accent))",
   "hsl(var(--color-muted))",
-]
+];
 
-export function CategoryChart() {
+interface CategoryChartProps {
+  data?: CategorySlice[];
+  isLoading?: boolean;
+}
+
+export function CategoryChart({ data, isLoading = false }: CategoryChartProps) {
+  const hasData = Array.isArray(data) && data.length > 0;
+  const chartData = hasData ? data : FALLBACK_DATA;
+
   return (
     <Card className="border-0 shadow-md">
       <CardHeader>
@@ -31,33 +42,46 @@ export function CategoryChart() {
         <CardDescription>Distribution of active plans</CardDescription>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label={({ name, value }) => `${name}: ${value}`}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="value"
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "hsl(var(--color-background))",
-                border: "1px solid hsl(var(--color-border))",
-                borderRadius: "8px",
-              }}
-              labelStyle={{ color: "hsl(var(--color-foreground))" }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+        {isLoading ? (
+          <div className="flex h-[300px] items-center justify-center text-sm text-foreground/60">
+            Loading chart...
+          </div>
+        ) : hasData ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={chartData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, value }) => `${name}: ${value}`}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {chartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "hsl(var(--color-background))",
+                  border: "1px solid hsl(var(--color-border))",
+                  borderRadius: "8px",
+                }}
+                labelStyle={{ color: "hsl(var(--color-foreground))" }}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="flex h-[300px] items-center justify-center text-sm text-foreground/60">
+            No category data available yet
+          </div>
+        )}
       </CardContent>
     </Card>
-  )
+  );
 }

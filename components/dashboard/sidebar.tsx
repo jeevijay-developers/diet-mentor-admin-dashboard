@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import Image from "next/image";
 
 const navItems = [
   {
@@ -94,14 +95,16 @@ export function Sidebar() {
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="p-6 border-b border-sidebar-border">
+          <div className="p-6 border-b-2 rounded-md border-gray-200">
             <Link href="/dashboard" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-sidebar-primary-foreground rounded-md flex items-center justify-center font-bold text-primary">
-                DM
-              </div>
               <div>
-                <div className="font-bold text-sm">DietMentor</div>
-                <div className="text-xs opacity-80">Admin Panel</div>
+                <Image
+                  src="/dietmentor-logo.png"
+                  alt="DietMentor Logo"
+                  width={100}
+                  height={80}
+                  className="object-contain w-56"
+                />
               </div>
             </Link>
           </div>
@@ -134,7 +137,7 @@ export function Sidebar() {
           <div className="p-4 border-t border-sidebar-border">
             <Button
               onClick={handleLogout}
-              className="w-full flex items-center gap-2 bg-sidebar-primary-foreground text-primary hover:bg-white/90"
+              className="w-full flex items-center gap-2 bg-white text-primary hover:bg-white/90"
             >
               <LogOut className="h-4 w-4" />
               Logout
