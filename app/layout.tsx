@@ -16,22 +16,34 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/icon-light-32x32.png",
+        url: "/favicon.ico",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/icon-dark-32x32.png",
+        url: "/favicon.ico",
         media: "(prefers-color-scheme: dark)",
       },
       {
-        url: "/icon.svg",
+        url: "/favicon.ico",
         type: "image/svg+xml",
       },
     ],
     apple: "/apple-icon.png",
   },
 };
-
+// export const metadata: Metadata = {
+//   title: "Dietify – Your Personal Online Dietician",
+//   description:
+//     "Personalized diet plans, expert nutritional guidance, and disease-specific programs crafted just for you.",
+//   generator: "v0.app",
+//   icons: {
+//     icon: [
+//       { url: "/fav.png", type: "image/png" },
+//       { url: "/favicon.ico", rel: "shortcut icon" },
+//     ],
+//     apple: "/fav.png",
+//   },
+// }
 export default function RootLayout({
   children,
 }: Readonly<{

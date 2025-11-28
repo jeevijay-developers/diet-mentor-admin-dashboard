@@ -5,7 +5,6 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@/components/dashboard/sidebar";
-import { Header } from "@/components/dashboard/header";
 
 export default function DashboardLayout({
   children,
