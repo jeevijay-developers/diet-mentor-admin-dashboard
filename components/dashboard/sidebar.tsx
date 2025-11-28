@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
   BarChart3,
   FileText,
@@ -14,9 +14,9 @@ import {
   Menu,
   X,
   ChevronRight,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useToast } from "@/hooks/use-toast"
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const navItems = [
   {
@@ -35,44 +35,34 @@ const navItems = [
     icon: Utensils,
   },
   {
-    label: "Patients",
-    href: "/dashboard/patients",
-    icon: Users,
+    label: "Category Management",
+    href: "/dashboard/category",
+    icon: BarChart3,
   },
-  {
-    label: "Analytics",
-    href: "/dashboard/analytics",
-    icon: AnalyticsIcon,
-  },
-  {
-    label: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-  },
-]
+];
 
 export function Sidebar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const pathname = usePathname()
-  const router = useRouter()
-  const { toast } = useToast()
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+  const { toast } = useToast();
 
   const handleLogout = () => {
-    localStorage.removeItem("auth")
-    localStorage.removeItem("rememberMe")
+    localStorage.removeItem("auth");
+    localStorage.removeItem("rememberMe");
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out.",
-    })
-    router.push("/")
-  }
+    });
+    router.push("/");
+  };
 
   const isActive = (href: string) => {
     if (href === "/dashboard") {
-      return pathname === "/dashboard"
+      return pathname === "/dashboard";
     }
-    return pathname.startsWith(href)
-  }
+    return pathname.startsWith(href);
+  };
 
   return (
     <>
@@ -89,11 +79,16 @@ export function Sidebar() {
       </div>
 
       {/* Overlay */}
-      {isOpen && <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setIsOpen(false)} />}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen w-64 bg-primary text-primary-foreground shadow-lg transform transition-transform duration-300 ease-in-out z-40 lg:translate-x-0 ${
+        className={`fixed left-0 top-0 h-screen w-80 bg-primary text-primary-foreground shadow-lg transform transition-transform duration-300 ease-in-out z-40 lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } lg:relative lg:translate-x-0`}
       >
@@ -114,24 +109,24 @@ export function Sidebar() {
           {/* Navigation */}
           <nav className="flex-1 overflow-y-auto p-4 space-y-2">
             {navItems.map((item) => {
-              const Icon = item.icon
-              const active = isActive(item.href)
+              const Icon = item.icon;
+              const active = isActive(item.href);
               return (
                 <Link key={item.href} href={item.href}>
                   <div
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer ${
+                    className={`flex items-center gap-3 px-4 py-3 my-2 rounded-lg transition-all duration-200 cursor-pointer ${
                       active
-                        ? "bg-sidebar-primary-foreground text-primary"
+                        ? "bg-gray-300 text-green-800 "
                         : "text-sidebar-foreground hover:bg-white/10"
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
-                    <Icon className="h-5 w-5 flex-shrink-0" />
+                    <Icon className="h-5 w-5 shrink-0" />
                     <span className="font-medium flex-1">{item.label}</span>
                     {active && <ChevronRight className="h-4 w-4" />}
                   </div>
                 </Link>
-              )
+              );
             })}
           </nav>
 
@@ -148,5 +143,5 @@ export function Sidebar() {
         </div>
       </aside>
     </>
-  )
+  );
 }

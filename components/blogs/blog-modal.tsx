@@ -1,108 +1,106 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Card } from "@/components/ui/card"
-import { X } from "lucide-react"
+import { useState, useEffect } from "react";
 
-interface Blog {
-  id: string
-  title: string
-  category: string
-  author: string
-  status: "Published" | "Draft"
-  createdDate: string
-  excerpt: string
-  content: string
-  tags: string[]
-  metaDescription: string
-  image?: string
-}
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { X } from "lucide-react";
+
+import { Blog } from "@/types/blog";
+import { uploadImage as uploadImageRequest } from "@/util/server";
+
+type BlogFormPayload = Omit<Blog, "id"> & { id?: string };
 
 interface BlogModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onSubmit: (blog: Omit<Blog, "id">) => void
-  initialBlog?: Blog | null
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (blog: BlogFormPayload) => void;
+  initialBlog?: Blog | null;
 }
 
-const categories = [
-  "Kids",
-  "Cancer",
-  "Weight Loss",
-  "Muscle Gain",
-  "Diabetes",
-  "PCOS",
-  "Heart-friendly",
-  "General Health",
-]
-
-export function BlogModal({ isOpen, onClose, onSubmit, initialBlog }: BlogModalProps) {
-  const [title, setTitle] = useState("")
-  const [category, setCategory] = useState("")
-  const [author, setAuthor] = useState("")
-  const [excerpt, setExcerpt] = useState("")
-  const [content, setContent] = useState("")
-  const [tags, setTags] = useState("")
-  const [metaDescription, setMetaDescription] = useState("")
-  const [isPublished, setIsPublished] = useState(false)
+export function BlogModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  initialBlog,
+}: BlogModalProps) {
+  const [title, setTitle] = useState("");
+  const [bannerImage, setBannerImage] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [body, setBody] = useState("");
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     if (initialBlog) {
-      setTitle(initialBlog.title)
-      setCategory(initialBlog.category)
-      setAuthor(initialBlog.author)
-      setExcerpt(initialBlog.excerpt)
-      setContent(initialBlog.content)
-      setTags(initialBlog.tags.join(", "))
-      setMetaDescription(initialBlog.metaDescription)
-      setIsPublished(initialBlog.status === "Published")
+      setTitle(initialBlog.title);
+      setBannerImage(initialBlog.bannerImage || "");
+      setBody(initialBlog.body);
+      setDate(initialBlog.date || "");
     } else {
-      setTitle("")
-      setCategory("")
-      setAuthor("")
-      setExcerpt("")
-      setContent("")
-      setTags("")
-      setMetaDescription("")
-      setIsPublished(false)
+      setTitle("");
+      setBannerImage("");
+      setBody("");
+      setDate("");
     }
-  }, [initialBlog, isOpen])
+  }, [initialBlog, isOpen]);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setUploadError(null);
+
+    try {
+      const response = await uploadImageRequest(file, "blogs");
+      if (response.data?.url) {
+        setBannerImage(response.data.url);
+      } else {
+        setUploadError("Image uploaded but no URL returned by Cloudinary.");
+      }
+    } catch (err) {
+      setUploadError("Failed to upload image. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     onSubmit({
+      id: initialBlog?.id,
       title,
-      category,
-      author,
-      status: isPublished ? "Published" : "Draft",
-      createdDate: initialBlog?.createdDate || new Date().toISOString().split("T")[0],
-      excerpt,
-      content,
-      tags: tags.split(",").map((t) => t.trim()),
-      metaDescription,
-    })
-  }
+      bannerImage: bannerImage || undefined,
+      body,
+      date: date || new Date().toISOString(),
+    });
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <Card className="w-full max-w-2xl border-0 shadow-xl max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 flex items-center justify-between p-6 border-b border-border bg-background">
-          <h2 className="text-xl font-bold text-foreground">{initialBlog ? "Edit Blog" : "Create New Blog"}</h2>
-          <button onClick={onClose} className="text-foreground/60 hover:text-foreground">
+          <h2 className="text-xl font-bold text-foreground">
+            {initialBlog ? "Edit Blog" : "Create New Blog"}
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-foreground/60 hover:text-foreground"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="text-sm font-medium text-foreground">Blog Title</label>
+            <label className="text-sm font-medium text-foreground">
+              Blog Title
+            </label>
             <Input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -112,97 +110,77 @@ export function BlogModal({ isOpen, onClose, onSubmit, initialBlog }: BlogModalP
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium text-foreground">Category</label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="mt-1 w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground"
-                required
-              >
-                <option value="">Select category</option>
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-foreground">Author</label>
-              <Input
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-                placeholder="Author name"
-                className="mt-1 bg-background border-border"
-                required
-              />
-            </div>
-          </div>
-
           <div>
-            <label className="text-sm font-medium text-foreground">Excerpt</label>
-            <textarea
-              value={excerpt}
-              onChange={(e) => setExcerpt(e.target.value)}
-              placeholder="Brief description of the blog"
-              className="mt-1 w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground"
-              rows={2}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-foreground">Content</label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Full blog content"
-              className="mt-1 w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground"
-              rows={4}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-foreground">Tags</label>
+            <label className="text-sm font-medium text-foreground">
+              Banner Image
+            </label>
             <Input
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="Enter tags separated by commas"
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="mt-1 bg-background border-border"
+              disabled={uploading}
+            />
+            {uploading && (
+              <span className="text-xs text-foreground/60">Uploading...</span>
+            )}
+            {uploadError && (
+              <span className="block text-xs text-destructive">
+                {uploadError}
+              </span>
+            )}
+            {bannerImage && (
+              <div className="mt-2">
+                <img
+                  src={bannerImage}
+                  alt="Banner"
+                  className="h-20 w-auto rounded"
+                />
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-foreground">
+              Blog Body
+            </label>
+            <textarea
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              placeholder="Enter blog content"
+              className="mt-1 w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground"
+              rows={6}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-foreground">Date</label>
+            <Input
+              type="date"
+              value={date ? date.split("T")[0] : ""}
+              onChange={(e) => setDate(e.target.value)}
               className="mt-1 bg-background border-border"
             />
           </div>
 
-          <div>
-            <label className="text-sm font-medium text-foreground">Meta Description</label>
-            <textarea
-              value={metaDescription}
-              onChange={(e) => setMetaDescription(e.target.value)}
-              placeholder="SEO meta description"
-              className="mt-1 w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground"
-              rows={2}
-            />
-          </div>
-
-          <div className="flex items-center gap-2 pt-4">
-            <Checkbox id="published" checked={isPublished} onCheckedChange={() => setIsPublished(!isPublished)} />
-            <label htmlFor="published" className="text-sm font-medium text-foreground cursor-pointer">
-              Publish this blog
-            </label>
-          </div>
-
           <div className="flex justify-end gap-3 pt-6 border-t border-border">
-            <Button variant="outline" onClick={onClose} className="border-border bg-transparent">
+            <Button
+              variant="outline"
+              onClick={onClose}
+              className="border-border bg-transparent"
+            >
               Cancel
             </Button>
-            <Button type="submit" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button
+              type="submit"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
               {initialBlog ? "Update Blog" : "Create Blog"}
             </Button>
           </div>
         </form>
       </Card>
     </div>
-  )
+  );
 }

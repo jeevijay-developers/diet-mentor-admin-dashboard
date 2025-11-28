@@ -1,20 +1,18 @@
-import type React from "react"
-;<parameter name="taskNameActive">Updating layout</parameter>
-\
-<parameter name="taskNameComplete">Updated layout</parameter>
+import React from "react";
 // ... existing code ...
-import { Geist, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
+import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
+import { Metadata } from "next";
 
 // <CHANGE> Updated metadata for DietMentor
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const _geist = Geist({ subsets: ["latin"] });
+const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "DietMentor - Admin Dashboard",
-  description: "Clinic Administrator Dashboard for DietMentor - Guiding Health Through Smart Nutrition",
-  generator: "v0.app",
+  description:
+    "Clinic Administrator Dashboard for DietMentor - Guiding Health Through Smart Nutrition",
   icons: {
     icon: [
       {
@@ -32,12 +30,12 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-icon.png",
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -46,5 +44,5 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Edit2, Trash2, Eye } from "lucide-react"
-import { useState } from "react"
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Edit2, Trash2, Eye } from "lucide-react";
+import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,28 +13,30 @@ import {
   AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 
-interface Blog {
-  id: string
-  title: string
-  category: string
-  author: string
-  status: "Published" | "Draft"
-  createdDate: string
-}
+import { Blog as BaseBlog } from "@/types/blog";
+
+interface Blog extends BaseBlog {}
 
 interface BlogListProps {
-  blogs: Blog[]
-  onEdit: (blog: Blog) => void
-  onDelete: (id: string) => void
-  currentPage: number
-  totalPages: number
-  onPageChange: (page: number) => void
+  blogs: Blog[];
+  onEdit: (blog: Blog) => void;
+  onDelete: (id: string) => void;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }
 
-export function BlogList({ blogs, onEdit, onDelete, currentPage, totalPages, onPageChange }: BlogListProps) {
-  const [deleteId, setDeleteId] = useState<string | null>(null)
+export function BlogList({
+  blogs,
+  onEdit,
+  onDelete,
+  currentPage,
+  totalPages,
+  onPageChange,
+}: BlogListProps) {
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   return (
     <>
@@ -43,41 +45,45 @@ export function BlogList({ blogs, onEdit, onDelete, currentPage, totalPages, onP
           <table className="w-full">
             <thead>
               <tr className="border-b border-border bg-muted/50">
-                <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Title</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Category</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Author</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">Date Created</th>
-                <th className="px-6 py-3 text-right text-sm font-semibold text-foreground">Actions</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                  Title
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                  Banner Image
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                  Date
+                </th>
+                <th className="px-6 py-3 text-right text-sm font-semibold text-foreground">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {blogs.map((blog) => (
-                <tr key={blog.id} className="border-b border-border hover:bg-muted/30 transition-colors">
-                  <td className="px-6 py-4 text-sm text-foreground font-medium">{blog.title}</td>
-                  <td className="px-6 py-4 text-sm text-foreground/70">{blog.category}</td>
-                  <td className="px-6 py-4 text-sm text-foreground/70">{blog.author}</td>
-                  <td className="px-6 py-4 text-sm">
-                    <Badge
-                      variant={blog.status === "Published" ? "default" : "secondary"}
-                      className={blog.status === "Published" ? "bg-primary text-primary-foreground" : ""}
-                    >
-                      {blog.status}
-                    </Badge>
+                <tr
+                  key={blog.id}
+                  className="border-b border-border hover:bg-muted/30 transition-colors"
+                >
+                  <td className="px-6 py-4 text-sm text-foreground font-medium">
+                    {blog.title}
                   </td>
                   <td className="px-6 py-4 text-sm text-foreground/70">
-                    {new Date(blog.createdDate).toLocaleDateString()}
+                    {blog.bannerImage ? (
+                      <img
+                        src={blog.bannerImage}
+                        alt="Banner"
+                        className="h-10 w-16 object-cover rounded"
+                      />
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-foreground/70">
+                    {blog.date ? new Date(blog.date).toLocaleDateString() : "-"}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => console.log("Preview:", blog.id)}
-                        className="border-border hover:bg-muted"
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
                       <Button
                         variant="outline"
                         size="sm"
@@ -104,7 +110,9 @@ export function BlogList({ blogs, onEdit, onDelete, currentPage, totalPages, onP
 
         {blogs.length === 0 && (
           <div className="py-12 text-center">
-            <p className="text-foreground/60">No blogs found. Create your first blog to get started.</p>
+            <p className="text-foreground/60">
+              No blogs found. Create your first blog to get started.
+            </p>
           </div>
         )}
       </Card>
@@ -136,20 +144,24 @@ export function BlogList({ blogs, onEdit, onDelete, currentPage, totalPages, onP
         </div>
       )}
 
-      <AlertDialog open={deleteId !== null} onOpenChange={() => setDeleteId(null)}>
+      <AlertDialog
+        open={deleteId !== null}
+        onOpenChange={() => setDeleteId(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Blog</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this blog? This action cannot be undone.
+              Are you sure you want to delete this blog? This action cannot be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="flex justify-end gap-3">
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => {
-                if (deleteId) onDelete(deleteId)
-                setDeleteId(null)
+                if (deleteId) onDelete(deleteId);
+                setDeleteId(null);
               }}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
@@ -159,5 +171,5 @@ export function BlogList({ blogs, onEdit, onDelete, currentPage, totalPages, onP
         </AlertDialogContent>
       </AlertDialog>
     </>
-  )
+  );
 }
