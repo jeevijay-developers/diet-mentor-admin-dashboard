@@ -17,13 +17,14 @@ type CategorySlice = {
 const FALLBACK_DATA: CategorySlice[] = [{ name: "General", value: 1 }];
 
 const COLORS = [
-  "hsl(var(--color-chart-1))",
-  "hsl(var(--color-chart-2))",
-  "hsl(var(--color-chart-3))",
-  "hsl(var(--color-chart-4))",
-  "hsl(var(--color-chart-5))",
-  "hsl(var(--color-accent))",
-  "hsl(var(--color-muted))",
+  "#6366F1",
+  "#F97316",
+  "#10B981",
+  "#EC4899",
+  "#14B8A6",
+  "#F59E0B",
+  "#3B82F6",
+  "#A855F7",
 ];
 
 interface CategoryChartProps {
@@ -68,7 +69,7 @@ export function CategoryChart({ data, isLoading = false }: CategoryChartProps) {
               </Pie>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--color-background))",
+                  backgroundColor: "white",
                   border: "1px solid hsl(var(--color-border))",
                   borderRadius: "8px",
                 }}
