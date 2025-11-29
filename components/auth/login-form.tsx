@@ -97,7 +97,7 @@ export function LoginForm() {
         localStorage.removeItem("rememberMe");
       }
 
-      setLoadingMessage("Waking backend...");
+      setLoadingMessage("Preparing your dashboard...");
       await waitForBackend();
 
       toast({
