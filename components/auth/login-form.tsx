@@ -16,6 +16,45 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 
+const DEFAULT_API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = (
+  process.env.NEXT_PUBLIC_API_BASE_URL || DEFAULT_API_BASE_URL
+).replace(/\/$/, "");
+const HEALTH_CHECK_URL = `${API_BASE_URL}/health-check`;
+
+const sleep = (ms: number) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+
+const waitForBackend = async () => {
+  // Keep pinging the backend health-check until it responds with 200.
+  // Some hosting providers pause inactive servers, so we loop until it's awake.
+  let hasLoggedFailure = false;
+
+  while (true) {
+    try {
+      const response = await fetch(HEALTH_CHECK_URL, {
+        cache: "no-store",
+      });
+
+      if (response.ok) {
+        return;
+      }
+    } catch (error) {
+      if (!hasLoggedFailure) {
+        console.info(
+          "Backend health-check failed, retrying until it wakes up...",
+          error
+        );
+        hasLoggedFailure = true;
+      }
+    }
+
+    await sleep(1500);
+  }
+};
+
 const VALID_CREDENTIALS = {
   email: "admin@dietmentor.com",
   password: "DietMentor@123",
@@ -28,36 +67,54 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("Signing in...");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setLoadingMessage("Signing in...");
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      await sleep(600);
+
       if (
-        email === VALID_CREDENTIALS.email &&
-        password === VALID_CREDENTIALS.password
+        email !== VALID_CREDENTIALS.email ||
+        password !== VALID_CREDENTIALS.password
       ) {
-        localStorage.setItem("auth", "true");
-        if (rememberMe) {
-          localStorage.setItem("rememberMe", "true");
-        }
-        toast({
-          title: "Login Successful",
-          description: "Welcome back to DietMentor!",
-        });
-        router.push("/dashboard");
-      } else {
         toast({
           title: "Login Failed",
           description: "Invalid email or password",
           variant: "destructive",
         });
+        return;
       }
+
+      localStorage.setItem("auth", "true");
+      if (rememberMe) {
+        localStorage.setItem("rememberMe", "true");
+      } else {
+        localStorage.removeItem("rememberMe");
+      }
+
+      setLoadingMessage("Waking backend...");
+      await waitForBackend();
+
+      toast({
+        title: "Login Successful",
+        description: "Welcome back to DietMentor!",
+      });
+      router.push("/dashboard");
+    } catch (error) {
+      toast({
+        title: "Server Unavailable",
+        description: "We couldn't wake the backend. Please try again shortly.",
+        variant: "destructive",
+      });
+      console.error("Failed to wake backend", error);
+    } finally {
       setIsLoading(false);
-    }, 600);
+    }
   };
 
   return (
@@ -130,7 +187,7 @@ export function LoginForm() {
                   disabled={isLoading}
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                 >
-                  {isLoading ? "Signing in..." : "Sign In"}
+                  {isLoading ? loadingMessage : "Sign In"}
                 </Button>
               </form>
               <div className="mt-4 text-center">
